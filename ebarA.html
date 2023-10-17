@@ -2,6 +2,67 @@
 <html>
 <head>
   <title>Text Encryption and Decryption</title>
+  <style>
+  /* Reset some default browser styles */
+body, h1, h2, h3, p, label, input, button, select {
+  margin: 0;
+  padding: 0;
+}
+
+/* Make a background color */
+body {
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+}
+
+/* Center the content */
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style headings */
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Style labels, inputs, and buttons */
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+input[type="text"], select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+  </style>
 </head>
 <body>
   <h1>Text Encryption and Decryption</h1>
@@ -23,6 +84,74 @@
     <label for="output">Résultat:</label>
     <input type="text" id="output" readonly>
   </div>
-  <script src="script.js"></script>
+  <script>
+// Linear Congruential Generator
+function* lcg(seed, a, c, m) {
+  while (true) {
+    seed = (a * seed + c) % m;
+    yield seed;
+  }
+}
+
+// Function to generate a random key
+function generateKey() {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < 10; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
+// Function to create a cipher dictionary from a key
+function createCipherDict(key) {
+  let seed = key.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const generator = lcg(seed, 1664525, 1013904223, Math.pow(2, 32));
+  const allChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+  const charToNum = {};
+  for (const char of allChars) {
+    charToNum[char] = generator.next().value % 1000000;
+  }
+  return charToNum;
+}
+
+// Function to encrypt text
+function encryptText(text, cipherDict) {
+  text = text.toLowerCase().replace(/ /g, 'X');
+  const encryptedText = text.split('').map(char => cipherDict[char]).join(' ');
+  return encryptedText;
+}
+
+// Function to decrypt text
+function decryptText(encryptedText, cipherDict) {
+  const numToChar = {};
+  for (const [char, num] of Object.entries(cipherDict)) {
+    numToChar[num] = char;
+  }
+  const decryptedText = encryptedText.split(' ').map(num => numToChar[parseInt(num)]).join('');
+  return decryptedText.replace(/X/g, ' ');
+}
+
+function performAction() {
+  const action = document.getElementById('action').value;
+  let key = document.getElementById('key').value;
+  if (!key) {
+    key = generateKey();
+    document.getElementById('key').value = key;
+  }
+  const cipherDict = createCipherDict(key);
+  const text = document.getElementById('text').value;
+  let output = '';
+
+  if (action === 'encoder') {
+    output = encryptText(text, cipherDict);
+  } else if (action === 'décoder') {
+    output = decryptText(text, cipherDict);
+  }
+
+  document.getElementById('output').value = output;
+}
+
+  </script>
 </body>
 </html>
