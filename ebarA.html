@@ -1,8 +1,28 @@
+<!DOCTYPE html>
 <html>
 <head>
-<title>ebarA • Online</title>
+  <title>Text Encryption and Decryption</title>
 </head>
 <body>
-test
+  <h1>Text Encryption and Decryption</h1>
+  <label for="action">Voulez-vous encoder ou décoder du texte?</label>
+  <select id="action">
+    <option value="encoder">Encoder</option>
+    <option value="décoder">Décoder</option>
+  </select>
+  <button onclick="performAction()">Go</button>
+  <div id="keyInput">
+    <label for="key">Entrez une clé ou laissez vide pour en générer une aléatoire:</label>
+    <input type="text" id="key">
+  </div>
+  <div id="textInput">
+    <label for="text">Entrez le texte:</label>
+    <input type="text" id="text">
+  </div>
+  <div id="result">
+    <label for="output">Résultat:</label>
+    <input type="text" id="output" readonly>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
