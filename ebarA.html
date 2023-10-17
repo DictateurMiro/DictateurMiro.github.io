@@ -67,23 +67,18 @@ button:hover {
 <body>
   <h1>Text Encryption and Decryption</h1>
   <label for="action">Voulez-vous encoder ou décoder du texte?</label>
-  <select id="action">
-    <option value="encoder">Encoder</option>
-    <option value="décoder">Décoder</option>
-  </select>
   <button onclick="performAction()">Go</button>
   <div id="keyInput">
     <label for="key">Entrez une clé ou laissez vide pour en générer une aléatoire:</label>
     <input type="text" id="key">
   </div>
-  <div id="textInput">
-    <label for="text">Entrez le texte:</label>
-    <input type="text" id="text">
-  </div>
-  <div id="result">
-    <label for="output">Résultat:</label>
-    <input type="text" id="output" readonly>
-  </div>
+  <input type="text" id="key" oninput="performAction()" placeholder="Entrez votre clé ici">
+<input type="text" id="text" oninput="performAction()" placeholder="Entrez votre texte ici">
+<select id="action" oninput="performAction()">
+  <option value="encoder">Encoder</option>
+  <option value="décoder">Décoder</option>
+</select>
+
   <script>
 // Linear Congruential Generator
 function* lcg(seed, a, c, m) {
