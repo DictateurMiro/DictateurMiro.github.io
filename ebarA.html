@@ -3,21 +3,18 @@
 <head>
   <title>Text Encryption and Decryption</title>
   <style>
-  /* Reset some default browser styles */
 body, h1, h2, h3, p, label, input, button, select {
   margin: 0;
   padding: 0;
 }
 
-/* Make a background color */
 body {
   background-color: #f9f9f9;
   font-family: Arial, sans-serif;
 }
 
-/* Center the content */
 .container {
-  max-width: 600px;
+  max-width: 500px;
   margin: 50px auto;
   background-color: #fff;
   padding: 20px;
@@ -25,13 +22,11 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Style headings */
 h1 {
   font-size: 24px;
   margin-bottom: 20px;
 }
 
-/* Style labels, inputs, and buttons */
 label {
   font-weight: bold;
   display: block;
@@ -39,7 +34,16 @@ label {
   text-align: center;
 }
 
-input[type="text"], select {
+input[type="text"] {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+select {
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
@@ -67,17 +71,25 @@ button:hover {
 <body>
   <h1>Text Encryption and Decryption</h1>
   <label for="action">Voulez-vous encoder ou décoder du texte?</label>
+  <select id="action">
+  <option value="encoder">Encoder</option>
+  <option value="decoder">Décoder</option>
+</select>
+	<CENTER>
   <button onclick="performAction()">Go</button>
+	<CENTER = "ZIAAALALALALALALAL"><br>
   <div id="keyInput">
     <label for="key">Entrez une clé ou laissez vide pour en générer une aléatoire:</label>
-    <input type="text" id="key">
+    <input type="text" id="key" oninput="if(document.getElementById('action').value === 'encoder') performAction();">
   </div>
-  <input type="text" id="key" oninput="performAction()" placeholder="Entrez votre clé ici">
-<input type="text" id="text" oninput="performAction()" placeholder="Entrez votre texte ici">
-<select id="action" oninput="performAction()">
-  <option value="encoder">Encoder</option>
-  <option value="décoder">Décoder</option>
-</select>
+  <div id="textInput">
+    <label for="text">Entrez le texte:</label>
+    <input type="text" id="text" oninput="if(document.getElementById('action').value === 'encoder') performAction();">
+  </div>
+  <div id="result">
+    <label for="output">Résultat:</label>
+    <input type="text" id="output" readonly>
+  </div>
 
   <script>
 // Linear Congruential Generator
@@ -140,13 +152,12 @@ function performAction() {
 
   if (action === 'encoder') {
     output = encryptText(text, cipherDict);
-  } else if (action === 'décoder') {
+  } else if (action === 'decoder') {
     output = decryptText(text, cipherDict);
   }
 
   document.getElementById('output').value = output;
 }
-
   </script>
 </body>
 </html>
