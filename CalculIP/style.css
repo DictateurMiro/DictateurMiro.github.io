@@ -1,3 +1,7 @@
+html {
+   cursor: url(https://i.imgur.com/OGJQ1OX.png), auto !important;
+}
+
 body {
     background-color: #f0f0f2;
     margin: 0;
@@ -48,16 +52,18 @@ footer a {
   color: #3498db;
   text-align: center;
   text-decoration: none;
+  cursor: url(https://i.imgur.com/yVV5e1G.png), pointer !important;
 }
 
 label {
   color: #212121;
   text-transform: bold;
+  cursor: url(https://i.imgur.com/OGJQ1OX.png), auto !important;
 }
 
 .main_button:hover {
   background-color: #404040;
-  cursor: pointer;
+  cursor: url(https://i.imgur.com/yVV5e1G.png), pointer !important;
 }
 
 ::selection {
@@ -68,4 +74,5 @@ label {
   color: #f57600;
   font-weight: bold;
   font-size: 30px;
+  
 }
